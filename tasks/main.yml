@@ -5,6 +5,14 @@
     name: docker
     state: present
 
+- name: Add docker_users to the docker group
+  become: True
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  loop: "{{ docker_users }}"
+
 - name: Install docker packages
   become: True
   apt:
