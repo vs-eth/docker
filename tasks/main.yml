@@ -9,49 +9,48 @@
     mode: "644"
 
 - name: Remove old docker repo
-  become: True
-  apt_repository:
+  become: true
+  ansible.builtin.apt_repository:
     repo: "deb https://apt.dockerproject.org/repo debian-{{ ansible_distribution_release }} main"
     mode: "0644"
     state: absent
 
 - name: Remove old docker repository key
-  become: True
-  apt_key:
+  become: true
+  ansible.builtin.apt_key:
     id: "58118E89F3A912897C070ADBF76221572C52609D"
     keyserver: "hkp://p80.pool.sks-keyservers.net:80"
     state: absent
 
 - name: Add docker APT repo
-  become: True
-  apt_repository:
+  become: true
+  ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repo }}"
     mode: "0644"
     state: present
 
 - name: Add docker group
-  become: True
-  group:
+  become: true
+  ansible.builtin.group:
     name: docker
     state: present
 
 - name: Install docker packages
-  become: True
-  apt:
+  become: true
+  ansible.builtin.apt:
     name:
       - docker-ce
       - docker-ce-cli
       - containerd.io
     state: present
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 1800
 
 - name: Install docker-compose
   when: docker_install_compose | bool
-  apt:
+  ansible.builtin.apt:
     name:
       - docker-compose
     state: present
-    update_cache: yes
-    cache_valid_time: 1800 
-
+    update_cache: true
+    cache_valid_time: 1800
