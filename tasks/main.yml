@@ -42,15 +42,8 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
-    state: present
-    update_cache: true
-    cache_valid_time: 1800
-
-- name: Install docker-compose
-  when: docker_install_compose | bool
-  ansible.builtin.apt:
-    name:
-      - docker-compose
+      - docker-buildx-plugin
+      - docker-compose-plugin
     state: present
     update_cache: true
     cache_valid_time: 1800
