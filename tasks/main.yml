@@ -1,9 +1,12 @@
 ---
 - name: Add Docker repository key
-  become: True
-  apt_key:
-    data: "{{ lookup('file', 'files/docker.gpg') }}"
-    state: present
+  become: true
+  ansible.builtin.copy:
+    src: "files/docker.gpg"
+    dest: /etc/apt/keyrings/docker.asc
+    owner: root
+    group: root
+    mode: "644"
 
 - name: Remove old docker repo
   become: True
